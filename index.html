@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Backtester V1 MR · FIX14.9</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">BOT V1 MR · DIAGNÓSTICO HISTÓRICO</div>
+      <h1>Backtester V1</h1>
+      <p>Compatible con TESTLOG del BOT FIX14.x. Analiza operaciones reales registradas; no envía órdenes a Deriv.</p>
+    </div>
+    <div id="badge" class="badge">SIN ARCHIVO</div>
+  </header>
+
+  <section class="panel controls">
+    <label class="fileBtn">📂 CARGAR TESTLOG JSON<input id="file" type="file" accept="application/json,.json" hidden></label>
+    <button id="demo" class="secondary">Cargar ejemplo</button>
+    <button id="reset" class="ghost">Limpiar</button>
+  </section>
+
+  <section class="panel filters">
+    <h2>Filtros de simulación</h2>
+    <div class="grid">
+      <label>Mercado<select id="market"><option value="ALL">Todos</option></select></label>
+      <label>Dirección<select id="direction"><option value="ALL">Todas</option><option>EVEN</option><option>ODD</option><option>RISE</option><option>FALL</option></select></label>
+      <label>Confianza mínima<input id="confidence" type="number" min="0" max="100" value="0"></label>
+      <label>Timing desde (ms)<input id="timingMin" type="number" value="-1000"></label>
+      <label>Timing hasta (ms)<input id="timingMax" type="number" value="1000"></label>
+      <label>Bucket timing<select id="bucket"><option value="100">100 ms</option><option value="50">50 ms</option><option value="200">200 ms</option></select></label>
+    </div>
+    <div class="checkrow">
+      <label><input id="finishedOnly" type="checkbox" checked> Solo operaciones finalizadas</label>
+      <label><input id="autoOnly" type="checkbox"> Solo automático</label>
+    </div>
+    <button id="run" class="primary">▶ EJECUTAR BACKTEST</button>
+  </section>
+
+  <section id="empty" class="panel empty">Cargue el TESTLOG descargado desde el panel de memoria del bot.</section>
+
+  <section id="results" hidden>
+    <div class="cards">
+      <article class="stat"><span>Operaciones</span><strong id="total">0</strong></article>
+      <article class="stat win"><span>Ganadas</span><strong id="wins">0</strong></article>
+      <article class="stat loss"><span>Perdidas</span><strong id="losses">0</strong></article>
+      <article class="stat"><span>Acierto</span><strong id="accuracy">0%</strong></article>
+      <article class="stat"><span>Mayor racha +</span><strong id="bestStreak">0</strong></article>
+      <article class="stat"><span>Mayor racha −</span><strong id="worstStreak">0</strong></article>
+    </div>
+
+    <section class="panel verdict">
+      <h2>Lectura del backtest</h2>
+      <p id="verdictText"></p>
+    </section>
+
+    <section class="panel"><h2>Resultado por timing</h2><div class="tableWrap"><table><thead><tr><th>Timing</th><th>Ops</th><th>G</th><th>P</th><th>%</th></tr></thead><tbody id="timingBody"></tbody></table></div></section>
+    <section class="panel"><h2>Resultado por mercado</h2><div class="tableWrap"><table><thead><tr><th>Mercado</th><th>Ops</th><th>G</th><th>P</th><th>%</th></tr></thead><tbody id="marketBody"></tbody></table></div></section>
+    <section class="panel"><h2>Resultado por dirección</h2><div class="tableWrap"><table><thead><tr><th>Dirección</th><th>Ops</th><th>G</th><th>P</th><th>%</th></tr></thead><tbody id="directionBody"></tbody></table></div></section>
+    <section class="panel"><h2>Mejores zonas detectadas</h2><div id="zones" class="zones"></div></section>
+    <section class="panel"><h2>Detalle de operaciones</h2><div class="tableWrap"><table><thead><tr><th>#</th><th>Mercado</th><th>Dir.</th><th>Conf.</th><th>Timing</th><th>Resultado</th></tr></thead><tbody id="opsBody"></tbody></table></div></section>
+  </section>
+</main>
+<script src="backtester.js"></script>
+</body>
+</html>
