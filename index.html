@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtester V3 MR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+<header>
+  <small>BOT V1 MR · VALIDACIÓN DE ROBUSTEZ</small>
+  <h1>Backtester V3</h1>
+  <p>Descubre reglas en una parte del historial y las valida en otra. Diseñado para reducir sobreajuste antes de llevar una regla al BOT.</p>
+  <div id="fileState" class="pill">SIN ARCHIVO</div>
+</header>
+
+<section class="card actions">
+  <label class="upload">📂 CARGAR TESTLOG JSON<input id="file" type="file" accept=".json,application/json"></label>
+  <button id="clear">Limpiar</button>
+</section>
+
+<section class="card">
+<h2>Configuración</h2>
+<div class="grid">
+  <label>Mercado<select id="market"><option value="">Todos</option></select></label>
+  <label>Dirección<select id="direction"><option value="">Todas</option><option>EVEN</option><option>ODD</option><option>RISE</option><option>FALL</option></select></label>
+  <label>Entrenamiento<select id="trainPct"><option value="60">60%</option><option value="70" selected>70%</option><option value="80">80%</option></select></label>
+  <label>Muestra mínima TRAIN<input id="minTrain" type="number" value="30" min="5"></label>
+  <label>Muestra mínima TEST<input id="minTest" type="number" value="15" min="5"></label>
+  <label>Bucket timing<select id="bucket"><option value="100" selected>100 ms</option><option value="50">50 ms</option><option value="200">200 ms</option></select></label>
+  <label>Confianza por tramos<select id="confBucket"><option value="10" selected>10 puntos</option><option value="5">5 puntos</option><option value="20">20 puntos</option></select></label>
+  <label>Top reglas<input id="topN" type="number" value="15" min="5" max="50"></label>
+  <label>Caída máxima aceptable<input id="maxDrop" type="number" value="8" min="0" max="30"> puntos</label>
+</div>
+<div class="checks">
+  <label><input id="finalOnly" type="checkbox" checked> Solo finalizadas</label>
+  <label><input id="autoOnly" type="checkbox"> Solo automático</label>
+</div>
+<button id="run" class="primary">🧪 EJECUTAR VALIDACIÓN</button>
+</section>
+
+<section id="summary" class="card muted">Cargue el TESTLOG para comenzar.</section>
+
+<section id="results" class="hidden">
+  <div class="card">
+    <h2>✅ Reglas que sobreviven</h2>
+    <p class="hint">Una regla sobrevive si mantiene muestra suficiente en TEST y su rendimiento no cae más de lo permitido frente a TRAIN.</p>
+    <div id="survivors"></div>
+  </div>
+
+  <div class="card">
+    <h2>⚠️ Reglas que no validaron</h2>
+    <div id="failed"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Comparación clave R_50</h2>
+    <div id="keyCompare"></div>
+  </div>
+
+  <div class="card">
+    <h2>📈 Walk-forward simple</h2>
+    <p class="hint">Divide el historial cronológicamente en 4 bloques y muestra cómo se comportan EVEN +100 ms, EVEN 0 ms y ODD +300 ms a lo largo del tiempo.</p>
+    <div id="walk"></div>
+  </div>
+</section>
+</main>
+<script src="backtester-v3.js"></script>
+</body>
+</html>
