@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtester V3.4 MR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+<header>
+  <small>BOT V1 MR · PRE-ENTRY ONLY</small>
+  <h1>Backtester V3.4</h1>
+  <p>Descubre reglas usando únicamente datos disponibles antes de decidir la entrada y exige muestra + estabilidad antes de considerar un subfiltro.</p>
+  <div id="fileState" class="pill">SIN ARCHIVO</div>
+</header>
+
+<section class="card actions">
+  <label class="upload">📂 CARGAR TESTLOG JSON
+    <input id="file" type="file" accept=".json,application/json">
+  </label>
+  <button id="clear">Limpiar</button>
+</section>
+
+<section class="card">
+<h2>Configuración</h2>
+<div class="grid">
+  <label>Mercado
+    <select id="market"><option value="">Todos</option></select>
+  </label>
+
+  <label>Dirección
+    <select id="direction">
+      <option value="">Todas</option>
+      <option>EVEN</option>
+      <option>ODD</option>
+      <option>RISE</option>
+      <option>FALL</option>
+    </select>
+  </label>
+
+  <label>TRAIN
+    <select id="trainPct">
+      <option value="60">60%</option>
+      <option value="70" selected>70%</option>
+      <option value="80">80%</option>
+    </select>
+  </label>
+
+  <label>Mínimo TRAIN regla
+    <input id="minTrain" type="number" value="30" min="5">
+  </label>
+
+  <label>Mínimo TEST regla
+    <input id="minTest" type="number" value="15" min="5">
+  </label>
+
+  <label>Bucket timing
+    <select id="bucket">
+      <option value="100" selected>100 ms</option>
+      <option value="50">50 ms</option>
+      <option value="200">200 ms</option>
+    </select>
+  </label>
+
+  <label>Confianza
+    <select id="confBucket">
+      <option value="10" selected>10 puntos</option>
+      <option value="5">5 puntos</option>
+    </select>
+  </label>
+
+  <label>Mínimo subfiltro TRAIN
+    <input id="minSubTrain" type="number" value="18" min="5">
+  </label>
+
+  <label>Mínimo subfiltro TEST
+    <input id="minSubTest" type="number" value="12" min="3">
+  </label>
+
+  <label>Exactitud mínima TEST
+    <input id="minTestAcc" type="number" value="58" min="0" max="100">
+  </label>
+
+  <label>Peor bloque mínimo
+    <input id="minWorstBlock" type="number" value="50" min="0" max="100">
+  </label>
+
+  <label>Variación máxima bloques
+    <input id="maxSpread" type="number" value="20" min="0" max="100">
+  </label>
+
+  <label>Bloques
+    <select id="blocks">
+      <option value="4" selected>4</option>
+      <option value="5">5</option>
+    </select>
+  </label>
+</div>
+
+<div class="checks">
+  <label><input id="finalOnly" type="checkbox" checked> Solo finalizadas</label>
+</div>
+
+<button id="run" class="primary">🧪 VALIDAR PRE-ENTRY</button>
+</section>
+
+<section id="summary" class="card muted">Cargue el TESTLOG para comenzar.</section>
+
+<section id="results" class="hidden">
+
+<div class="card">
+  <h2>✅ Regla base validada</h2>
+  <div id="base"></div>
+</div>
+
+<div class="card">
+  <h2>🚫 Auditoría Pre-Entry</h2>
+  <p class="hint">Bloquea datos posteriores al resultado y también datos que aparecen después de decidir/ejecutar la compra.</p>
+  <div id="audit"></div>
+</div>
+
+<div class="card">
+  <h2>🔎 Subfiltros candidatos</h2>
+  <div id="subs"></div>
+</div>
+
+<div class="card">
+  <h2>📈 Walk-forward exacto</h2>
+  <div id="walk"></div>
+</div>
+
+<div class="card">
+  <h2>🏁 Clasificación final</h2>
+  <div id="finalClass"></div>
+</div>
+
+<div class="card">
+  <h2>🧭 Diagnóstico</h2>
+  <div id="diag"></div>
+</div>
+
+</section>
+</main>
+<script src="backtester-v3-4.js"></script>
+</body>
+</html>
